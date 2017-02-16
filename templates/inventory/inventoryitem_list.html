@@ -2,10 +2,49 @@
 {% block content %}
 <div class="container">
   <h1>Hey</h1>
+
+
+<table  class="table table-bordered" >
+    <caption>Database</caption>
+  <tr>
+    <th>Case No. </th>
+    <th>Date Entered</th>
+    <th>Name</th>
+    <th>Product</th>
+    <th>Bottle Size</th>
+    <th>Bottles per Case</th>
+    <th>Proof</th>
+    <th>Stray Bottles</th>
+    <th>Liters</th>
+    <th>Wine Gallons</th>
+    <th>Proof Gallons</th>
+    <th>Date Removed</th>
+
+  </tr>
+
   {% for item in object_list %}
-  <div class="container">
-    {{item.case_number}}
-  </div>
+  <tr>
+    <td>{{item.case_number}}</td>
+    <td>{{item.date_assigned}}</td>
+    <td>{{item.name}}</td>
+    <td>{{item.product}}</td>
+    <td>{{item.bottle_size}}</td>
+    <td>{{item.bottles_per_case}}</td>
+    <td>{{item.proof}}</td>
+    <td>{{item.stray_bottles}}</td>
+    <td>{{item.liters}}</td>
+    <td>{{item.wine_gallons}}</td>
+    <td>{{item.proof_gallons}}</td>
+    <td>{{item.date_removed}}</td>
+
+
+  </tr>
+
+
+
+
+
+
   {% endfor %}
 </div>
 

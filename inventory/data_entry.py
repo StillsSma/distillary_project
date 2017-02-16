@@ -1,14 +1,21 @@
-from inventory.models import InventoryItem
+from inventory.models import InventoryItem, Product
 from datetime import datetime
-def datafunction(request):
+def case_entry(request):
     count = 0
     for item in range(int(request['number_of_cases'])):
         inventory_item = InventoryItem.objects.create(case_number=(int(request['starting_case_number']) + count),
-        date_assigned=datetime.strptime(request['date_assigned'], '%m/%d/%Y'), name=request['name'],
-        bottle_size=float(request['bottle_size']), proof=float(request['proof']),
+         name=Product.objects.get(pk=request['name']),
+        bottles_per_case=int(request['bottles_per_case']), proof=float(request['proof']),
         number_of_cases=int(request['number_of_cases']),
+        invoice_number=Product.objects.get(pk=request['name']).invoice_number,
         stray_bottles=int(request['stray_bottles']))
 
 
         inventory_item.save()
+        count += 1
+
+def case_remove(request):
+    count = 0
+    for item in range(int(request['number_of_cases'])):
+        InventoryItem.objects.filter(case_number=int(request['starting_case_number']) + count).update(date_removed=datetime.today())
         count += 1

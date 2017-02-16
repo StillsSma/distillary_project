@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <h1>Products</h1>
+
+
+<table  class="table table-bordered" >
+    <caption>Entered Prodcuts</caption>
+  <tr>
+    <th>Product Name</th>
+    <th>Product Type</th>
+    <th>Invoice No.</th>
+  </tr>
+
+  {% for item in object_list %}
+  <tr>
+    <td>{{item.product_name}}</td>
+    <td>{{item.product_type}}</td>
+    <td>{{item.invoice_number}}</td>
+  </tr>
+{% endfor %}
+
+{% endblock %}
