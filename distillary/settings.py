@@ -52,6 +52,9 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'distillary.urls'
 
+FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
+                        "django_excel.TemporaryExcelFileUploadHandler")
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -81,6 +84,10 @@ DATABASES = {
     }
 }
 
+import dj_database_url
+heroku_database = dj_database_url.config()
+if heroku_database:
+    DATABASES["default"] = heroku_database
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -118,5 +125,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/inventory/'
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")

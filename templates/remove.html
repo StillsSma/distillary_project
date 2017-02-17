@@ -1,11 +1,21 @@
 {% extends 'base.html'%}
 {% block content%}
-<h1>Put stuff here</h1>
+<div class="container">
+
+
+<h1>Remove Case From Inventory</h1>
 
 <form action="" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit" />
-</form>
+    {% for row in form %}
+    <ul>
+        
+        <li>{{row}}</li>
+    </ul>
 
+
+    {% endfor %}
+    <input type="submit" value="Enter" />
+</form>
+</div>
 {% endblock %}

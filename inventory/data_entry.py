@@ -15,7 +15,4 @@ def case_entry(request):
         count += 1
 
 def case_remove(request):
-    count = 0
-    for item in range(int(request['number_of_cases'])):
-        InventoryItem.objects.filter(case_number=int(request['starting_case_number']) + count).update(date_removed=datetime.today())
-        count += 1
+    InventoryItem.objects.filter(case_number=int(request['case_id'])).update(date_removed=datetime.today())

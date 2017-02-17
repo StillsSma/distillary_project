@@ -16,14 +16,49 @@
   </head>
 
 <body>
+
   <ul class="nav nav-tabs">
-    <li role="presentation" class="active"><a href="{% url 'inventory_list_view' %}">Inventory</a></li>
-  <li role="presentation" class="active"><a href="{% url 'inventory_form_view' %}">Add to Inventory</a></li>
+    {% if not request.user.is_authenticated %}
+       <li role="presentation"><a href="{% url 'login' %}">Login</a></li>
+       <li role="presentation"><a href="{% url 'user_create_view' %}">Create User Account</a></li>
+        {% else %}
+           <li role="presentation"><a href="{% url 'logout' %}?next={% url 'inventory_list_view' %}">Logout</a></li>
+         {% endif %}
+
+    <li role="presentation" ><a href="{% url 'inventory_list_view' %}">Inventory</a></li>
+  <li role="presentation"><a href="{% url 'inventory_form_view' %}">Add to Inventory</a></li>
+  {% if object_list|length == 0 %}
+  {% else %}
   <li role="presentation"><a href="{% url 'inventory_removal_view' %}">Remove from Inventory</a></li>
-  <li role="presentation"><a href="{% url 'product_list_view' %}">View Skews </a></li>
-</ul>
+  {% endif %}
+
+  <li role="presentation"><a href="{% url 'product_list_view' %}">View Products </a></li>
+  </ul>
 
 
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
+      {% endfor %}
+    {% endif %}
+
+    {% if form.errors %}
+      <div class="alert alert-error">
+        <h4>Please fix the following errors</h4>
+        <ul>
+          {% for field in form %}
+            {% if field.errors %}
+              {% for error in field.errors %}
+                <li><a href="#id_{{ field.name }}" class="error">{{ error|escape }}</a></li>
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </ul>
+        {% if form.non_field_errors %}
+          {{ form.non_field_errors }}
+        {% endif %}
+      </div>
+    {% endif %}
 
 
   {% block content %}

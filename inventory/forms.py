@@ -24,6 +24,8 @@ class InventoryForm(forms.Form):
     stray_bottles = forms.IntegerField(required=False, initial=0)
 
 class RemovalForm(forms.Form):
-    starting_case_number = forms.IntegerField()
-    number_of_cases = forms.IntegerField()
-    information = forms.CharField(widget=forms.Textarea)
+    case_id = forms.IntegerField(label='Case')
+    information = forms.CharField(widget=forms.Textarea, required=False, label='Info')
+
+class FileForm(forms.Form):
+    data = forms.FileField()

@@ -17,6 +17,8 @@
     <td>{{item.product_name}}</td>
     <td>{{item.product_type}}</td>
     <td>{{item.invoice_number}}</td>
+    <td><a href="{% url 'product_update_view' item.id %}">Update</a></td>
+    <td><a href="{% url 'product_delete_view' item.id %}">Delete</a></td>
   </tr>
 {% endfor %}
 

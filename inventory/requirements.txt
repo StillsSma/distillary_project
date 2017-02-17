@@ -1,0 +1,6 @@
+django
+python-dateutil
+gunicorn
+dj-database-url
+whitenoise
+psycopg2
