@@ -22,7 +22,7 @@ from inventory.views import InventoryListView, ProductListView, ProductCreateVie
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('django.contrib.auth.urls')),
-    url(r'^inventory/$', InventoryListView.as_view(), name='inventory_list_view'),
+    url(r'^$', InventoryListView.as_view(), name='inventory_list_view'),
     url(r'^inventory/create/$', inventory_form_view, name="inventory_form_view"),
     url(r'^inventory/remove/$', inventory_removal_view, name="inventory_removal_view"),
     url(r'^inventory/upload/$', file_upload_view, name="file_upload_view"),
