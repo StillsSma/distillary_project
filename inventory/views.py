@@ -39,6 +39,13 @@ class InventoryListView(LoginRequiredMixin, ListView):
         context['products'] = products
         return context
 
+class InventorySummaryView(LoginRequiredMixin, ListView):
+
+    model = Product
+    def get_template_names(self):
+        return('inventory/inventory_summary.html')
+
+
 @login_required
 def inventory_form_view(request):
     if request.method == "POST":
@@ -46,7 +53,7 @@ def inventory_form_view(request):
 
         form = InventoryForm(request.POST)
         if form.is_valid():
-            messages.success(request, 'Cases Added.')
+            messages.success(request, 'Successfully Added.')
             case_entry(r)
             return HttpResponseRedirect(reverse_lazy('inventory_list_view'))
     else:
@@ -77,12 +84,12 @@ class ProductListView(LoginRequiredMixin, ListView):
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
-    fields = ['product_name', 'product_type', 'invoice_number']
+    fields = ['product_name', 'product_type', 'product_number', 'bottle_size']
     success_url = reverse_lazy("product_list_view")
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
-    fields = ['product_name', 'product_type', 'invoice_number']
+    fields = ['product_name', 'product_type', 'product_number', 'bottle_size']
     success_url = reverse_lazy("product_list_view")
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
@@ -95,7 +102,7 @@ def file_upload_view(request):
         form = FileForm(request.POST, request.FILES)
 
         if form.is_valid():
-            print(request.FILES['data'].get_sheet())
+            print(request.FILES['data'].get_book_dict())
             return HttpResponse("OK", status=200)
         else:
             return HttpResponseBadRequest()

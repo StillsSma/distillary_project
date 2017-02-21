@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+<div class="container">
+  <h1>Distillery Inventory Summary</h1>
+  <table  class="table table-bordered" >
+      <caption>Strays</caption>
+    <tr>
+      <th>Product</th>
+      <th>Amount</th>
+    </tr>
+
+    {% for product in object_list %}
+    <tr>
+      <td>{{product}}</td>
+        <td>{{product.number_of_strays}}</td>
+
+    </tr>
+
+    </tr>
+    {% endfor %}
+
+<table  class="table table-bordered" >
+    <caption>Cases</caption>
+  <tr>
+    <th>Name</th>
+    <th>Liters</th>
+    <th>Wine Gallons</th>
+    <th>Proof Gallons</th>
+    <th>Number of Cases</th>
+
+  </tr>
+
+  {% for product in object_list %}
+  <tr>
+    <td>{{product}}</td>
+    <td>{{product.total_liters}}</td>
+    <td>{{product.total_wine_gallons}}</td>
+    <td>{{product.total_proof_gallons}}</td>
+    <td>{{product.number_of_cases}}</td>
+
+
+  </tr>
+
+
+
+
+
+
+  {% endfor %}
+
+
+
+
+</div>
+
+
+{% endblock %}
