@@ -11,14 +11,14 @@ class ProductChoiceField(ModelChoiceField):
 class InventoryForm(forms.Form):
 
     BOTTLES = [
-    ("12 ", "12"),
-    ("6 ", "6")
+    (".750 ", ".750"),
+    (".375 ", ".375")
     ]
 
 
     starting_case_number = forms.IntegerField()
     name = ProductChoiceField(queryset=Product.objects.all(), empty_label=None)
-    bottles_per_case= forms.ChoiceField(choices=BOTTLES)
+    bottle_size = forms.ChoiceField(choices=BOTTLES)
     proof = forms.DecimalField()
     number_of_cases = forms.IntegerField()
     stray_bottles = forms.IntegerField(required=False, initial=0)

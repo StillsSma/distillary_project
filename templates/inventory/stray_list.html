@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+<div class="container">
+
+  <table  class="table table-bordered" >
+      <caption>Cases</caption>
+    <tr>
+      <th>Date Entered</th>
+      <th>Name</th>
+      <th>Product</th>
+      <th>Bottle Size</th>
+      <th>Proof</th>
+
+
+    </tr>
+
+    {% for item in object_list %}
+    <tr>
+      <td>{{item.date_assigned}}</td>
+      <td>{{item.name}}</td>
+      <td>{{item.product}}</td>
+      <td>{{item.bottle_size}}</td>
+      <td>{{item.proof}}</td>
+
+    </tr>
+    {% endfor %}
+</div>
+
+
+{% endblock %}

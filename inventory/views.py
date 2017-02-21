@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse, reverse_lazy
-from inventory.models import InventoryItem, Product
+from inventory.models import InventoryItem, Product, Stray
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from inventory.forms import InventoryForm, RemovalForm, FileForm
@@ -30,7 +30,14 @@ class UserCreateView(CreateView):
 
 
 class InventoryListView(LoginRequiredMixin, ListView):
+    # Lists the items currently in inventory
     model = InventoryItem
+    def get_context_data(self, **kwargs):
+        # Gather queryset for stray bottles
+        context = super(InventoryListView, self).get_context_data(**kwargs)
+        products = Product.objects.all()
+        context['products'] = products
+        return context
 
 @login_required
 def inventory_form_view(request):
@@ -41,7 +48,7 @@ def inventory_form_view(request):
         if form.is_valid():
             messages.success(request, 'Cases Added.')
             case_entry(r)
-            return HttpResponseRedirect('/inventory/')
+            return HttpResponseRedirect(reverse_lazy('inventory_list_view'))
     else:
         i = len(InventoryItem.objects.all())
         form = InventoryForm(initial = {'starting_case_number': i + 1 })
@@ -58,7 +65,7 @@ def inventory_removal_view(request):
         if form.is_valid():
             messages.success(request, 'Case Removed.')
             case_remove(r)
-            return HttpResponseRedirect('/inventory/remove')
+            return HttpResponseRedirect(reverse_lazy('inventory_removal_view'))
     else:
         form = RemovalForm()
 
@@ -88,10 +95,7 @@ def file_upload_view(request):
         form = FileForm(request.POST, request.FILES)
 
         if form.is_valid():
-            print(request.FILES['data'].get_dict()['Case Number'])
-
-
-
+            print(request.FILES['data'].get_sheet())
             return HttpResponse("OK", status=200)
         else:
             return HttpResponseBadRequest()
