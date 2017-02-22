@@ -2,6 +2,7 @@
 {% block content%}
 
     <h1>{{header}}</h1>
+    <div class="container">
 
     {% if form.errors %}
         <p style="color: red;">
@@ -16,5 +17,7 @@
         {% csrf_token %}
         <input type="submit" value="Submit">
     </form>
+  </div>
+
 </html>
 {% endblock %}

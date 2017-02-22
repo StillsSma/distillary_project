@@ -35,8 +35,8 @@ class InventoryListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         # Gather queryset for stray bottles
         context = super(InventoryListView, self).get_context_data(**kwargs)
-        products = Product.objects.all()
-        context['products'] = products
+        strays = Stray.objects.all()
+        context['strays'] = strays
         return context
 
 class InventorySummaryView(LoginRequiredMixin, ListView):
@@ -84,12 +84,12 @@ class ProductListView(LoginRequiredMixin, ListView):
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
-    fields = ['product_name', 'product_type', 'product_number', 'bottle_size']
+    fields = ['product_name', 'product_type', 'UPC', 'bottle_size']
     success_url = reverse_lazy("product_list_view")
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
-    fields = ['product_name', 'product_type', 'product_number', 'bottle_size']
+    fields = ['product_name', 'product_type', 'UPC', 'bottle_size']
     success_url = reverse_lazy("product_list_view")
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
@@ -102,7 +102,9 @@ def file_upload_view(request):
         form = FileForm(request.POST, request.FILES)
 
         if form.is_valid():
-            print(request.FILES['data'].get_book_dict())
+            pass
+
+
             return HttpResponse("OK", status=200)
         else:
             return HttpResponseBadRequest()

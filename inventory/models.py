@@ -4,8 +4,8 @@ from django.db.models import Sum
 class Product(models.Model):
     product_name = models.CharField(max_length=50)
     product_type = models.CharField(max_length=50)
-    product_number = models.IntegerField()
-    bottle_size = models.DecimalField(max_digits=3,decimal_places=3)
+    UPC = models.CharField(max_length=20)
+    bottle_size = models.IntegerField()
 
     def __str__(self):
         return str(self.product_name)
@@ -50,9 +50,9 @@ class InventoryItem(models.Model):
 
     @property
     def bottles_per_case(self):
-        if self.name.bottle_size == .750:
+        if self.name.bottle_size == 750:
             return 6
-        elif self.name.bottle_size == .375:
+        elif self.name.bottle_size == 375:
             return 12
 
     @property
@@ -61,7 +61,7 @@ class InventoryItem(models.Model):
 
     @property
     def liters(self):
-        return round(self.name.bottle_size * self.bottles_per_case,2)
+        return round(self.name.bottle_size/1000 * self.bottles_per_case,2)
 
     @property
     def wine_gallons(self):

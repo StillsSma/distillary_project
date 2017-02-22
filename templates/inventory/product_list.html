@@ -2,21 +2,21 @@
 {% block content %}
 <div class="container">
   <h1>Products</h1>
-
+  <h4><a href="{% url 'product_create_view' %}">Add Product</a></h4>
 
 <table  class="table table-bordered" >
-    <caption>Entered Prodcuts</caption>
+    <caption>Entered Products</caption>
   <tr>
     <th>Product Name</th>
     <th>Product Type</th>
-    <th>Product No.</th>
+    <th>UPC</th>
   </tr>
 
   {% for item in object_list %}
   <tr>
     <td>{{item.product_name}}</td>
     <td>{{item.product_type}}</td>
-    <td>{{item.product_number}}</td>
+    <td>{{item.UPC}}</td>
     <td><a href="{% url 'product_update_view' item.id %}">Update</a></td>
     <td><a href="{% url 'product_delete_view' item.id %}">Delete</a></td>
   </tr>
