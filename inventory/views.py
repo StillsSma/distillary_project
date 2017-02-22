@@ -12,7 +12,7 @@ from django.urls import reverse, reverse_lazy
 from inventory.models import InventoryItem, Product, Stray
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from inventory.forms import InventoryForm, RemovalForm, FileForm
+from inventory.forms import InventoryForm, RemovalForm
 from inventory.data_entry import case_entry, case_remove
 from django.contrib import messages
 
@@ -95,19 +95,3 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     success_url = reverse_lazy("product_list_view")
-
-@login_required
-def file_upload_view(request):
-    if request.method == "POST":
-        form = FileForm(request.POST, request.FILES)
-
-        if form.is_valid():
-            pass
-
-
-            return HttpResponse("OK", status=200)
-        else:
-            return HttpResponseBadRequest()
-    else:
-        form = FileForm()
-    return render(request, 'upload.html', {'form': form})

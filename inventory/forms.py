@@ -11,6 +11,7 @@ class ProductChoiceField(ModelChoiceField):
 class InventoryForm(forms.Form):
 
     starting_case_number = forms.IntegerField()
+    date_assigned = forms.DateField()
     name = ProductChoiceField(queryset=Product.objects.all(), empty_label=None)
     proof = forms.DecimalField()
     number_of_cases = forms.IntegerField()
@@ -20,5 +21,6 @@ class RemovalForm(forms.Form):
     case_id = forms.IntegerField(label='Case')
     information = forms.CharField(widget=forms.Textarea, required=False, label='Info')
 
-class FileForm(forms.Form):
-    data = forms.FileField()
+class MultiRemovalForm(forms.Form):
+    case_id = forms.IntegerField(label='Case')
+    information = forms.CharField(widget=forms.Textarea, required=False, label='Info')

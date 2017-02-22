@@ -41,10 +41,9 @@ class Product(models.Model):
 
 class InventoryItem(models.Model):
     case_number = models.IntegerField(unique=True)
-    date_assigned = models.DateTimeField(auto_now_add=True)
+    date_assigned = models.DateField()
     name = models.ForeignKey(Product, on_delete=models.PROTECT)
     proof = models.DecimalField(max_digits=5,decimal_places=2)
-    number_of_cases = models.IntegerField()
     date_removed = models.DateTimeField(null=True,blank=True)
 
 
