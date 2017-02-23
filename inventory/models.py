@@ -73,7 +73,7 @@ class InventoryItem(models.Model):
         return round((int(self.proof)/100 * self.wine_gallons), 2)
 
 class Stray(models.Model):
-    date_assigned = models.DateTimeField()
+    date_assigned = models.DateField()
     name = models.ForeignKey(Product, on_delete=models.PROTECT)
     proof = models.DecimalField(max_digits=5,decimal_places=2)
 
