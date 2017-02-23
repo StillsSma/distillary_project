@@ -19,7 +19,7 @@ from django.contrib import messages
 
 class UserCreateView(CreateView):
     model = User
-    success_url = reverse_lazy("inventory_list_view")
+    success_url = reverse_lazy("inventory_summary_view")
     form_class = UserCreationForm
     def form_valid(self, form): #logs the user in upon account creation
         valid = super(UserCreateView, self).form_valid(form)
@@ -32,6 +32,8 @@ class UserCreateView(CreateView):
 class InventoryListView(LoginRequiredMixin, ListView):
     # Lists the items currently in inventory
     model = InventoryItem
+    def get_queryset(self):
+        return InventoryItem.objects.all().order_by('case_number')
     def get_context_data(self, **kwargs):
         # Gather queryset for stray bottles
         context = super(InventoryListView, self).get_context_data(**kwargs)
@@ -55,7 +57,7 @@ def inventory_form_view(request):
         if form.is_valid():
             messages.success(request, 'Successfully Added.')
             case_entry(r)
-            return HttpResponseRedirect(reverse_lazy('inventory_list_view'))
+            return HttpResponseRedirect(reverse_lazy('inventory_summary_view'))
     else:
         i = len(InventoryItem.objects.all())
         form = InventoryForm(initial = {'starting_case_number': i + 1 })
