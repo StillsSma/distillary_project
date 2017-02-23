@@ -46,6 +46,8 @@ class InventoryItem(models.Model):
     proof = models.DecimalField(max_digits=5,decimal_places=2)
     date_removed = models.DateTimeField(null=True,blank=True)
 
+    def __str__(self):
+        return str(self.name)
 
     @property
     def bottles_per_case(self):
