@@ -12,7 +12,7 @@ def case_entry(request):
         inventory_item.save()
         count += 1
     for num in range(int(request['stray_bottles'])):
-        stray_bottle = Stray.objects.create(name=Product.objects.get(pk=request['name']),
+        stray_bottle = Stray.objects.create(name=Product.objects.get(pk=request['name']),date_assigned=request['date_assigned'],
         proof=float(request['proof']))
         stray_bottle.save()
 
