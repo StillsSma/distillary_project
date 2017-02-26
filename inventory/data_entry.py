@@ -11,15 +11,26 @@ def case_entry(request):
 
         inventory_item.save()
         count += 1
-    for num in range(int(request['stray_bottles'])):
-        stray_bottle = Stray.objects.create(name=Product.objects.get(pk=request['name']),date_assigned=request['date_assigned'],
-        proof=float(request['proof']))
-        stray_bottle.save()
 
 
 
 def case_remove(request):
-    InventoryItem.objects.filter(case_number=int(request['case_id'])).update(date_removed=datetime.now())
+        InventoryItem.objects.filter(case_number=int(request['case_id'])).update(date_removed=datetime.now())
 
-def cases_remove(request):
-    pass
+
+def case_delete(request):
+    for num in request.GET.getlist('to_delete'):
+        InventoryItem.objects.get(id=num).delete()
+
+
+def stray_entry(request):
+    for bottle in range(int(request['number_of_bottles'])):
+        stray = Stray.objects.create(date_assigned=request['date_assigned'],
+                                        name=Product.objects.get(pk=request['name']),
+                                        proof=float(request['proof']))
+
+        stray.save()
+
+def stray_delete(request):
+    for num in request.GET.getlist('to_delete'):
+        Stray.objects.get(id=num).delete()

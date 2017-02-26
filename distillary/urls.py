@@ -17,7 +17,8 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from inventory.views import InventoryListView, ProductListView, ProductCreateView, \
                             ProductDeleteView, ProductUpdateView, inventory_form_view, \
-                            inventory_removal_view, UserCreateView, InventorySummaryView
+                            inventory_removal_view, UserCreateView, InventorySummaryView, \
+                            inventory_delete_view, stray_create_view, stray_delete_view
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -26,6 +27,9 @@ urlpatterns = [
     url(r'^inventory/$', InventoryListView.as_view(), name='inventory_list_view'),
     url(r'^inventory/create/$', inventory_form_view, name="inventory_form_view"),
     url(r'^inventory/remove/$', inventory_removal_view, name="inventory_removal_view"),
+    url(r'^inventory/delete/$', inventory_delete_view, name="inventory_delete_view"),
+    url(r'^inventory/stray/create/$', stray_create_view, name="stray_create_view"),
+    url(r'^inventory/stray/delete/$', stray_delete_view, name="stray_delete_view"),
     url(r'^product/$', ProductListView.as_view(), name="product_list_view"),
      url(r'^create_user/$', UserCreateView.as_view(), name="user_create_view"),
     url(r'^product/create/$', ProductCreateView.as_view(), name="product_create_view"),

@@ -15,12 +15,16 @@ class InventoryForm(forms.Form):
     name = ProductChoiceField(queryset=Product.objects.all(), empty_label=None)
     proof = forms.DecimalField()
     number_of_cases = forms.IntegerField()
-    stray_bottles = forms.IntegerField(required=False, initial=0)
+
+class StrayForm(forms.Form):
+    date_assigned = forms.DateField()
+    name = ProductChoiceField(queryset=Product.objects.all(), empty_label=None)
+    proof = forms.DecimalField()
+    number_of_bottles = forms.IntegerField()
+
 
 class RemovalForm(forms.Form):
-    case_id = forms.IntegerField(label='Case')
-    information = forms.CharField(widget=forms.Textarea, required=False, label='Info')
 
-class MultiRemovalForm(forms.Form):
-    case_id = forms.IntegerField(label='Case')
+
+    case_id = forms.IntegerField(label='Case Number')
     information = forms.CharField(widget=forms.Textarea, required=False, label='Info')

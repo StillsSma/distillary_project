@@ -12,8 +12,8 @@ from django.urls import reverse, reverse_lazy
 from inventory.models import InventoryItem, Product, Stray
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from inventory.forms import InventoryForm, RemovalForm
-from inventory.data_entry import case_entry, case_remove
+from inventory.forms import InventoryForm, RemovalForm, StrayForm
+from inventory.data_entry import case_entry, case_remove, case_delete, stray_entry, stray_delete
 from django.contrib import messages
 
 
@@ -52,17 +52,31 @@ class InventorySummaryView(LoginRequiredMixin, ListView):
 def inventory_form_view(request):
     if request.method == "POST":
         r = request.POST
-
         form = InventoryForm(request.POST)
         if form.is_valid():
             messages.success(request, 'Successfully Added.')
             case_entry(r)
             return HttpResponseRedirect(reverse_lazy('inventory_summary_view'))
     else:
-        i = len(InventoryItem.objects.all())
-        form = InventoryForm(initial = {'starting_case_number': i + 1 })
+        if len(InventoryItem.objects.all()) > 0:
+            i = InventoryItem.objects.last().case_number
+            form = InventoryForm(initial = {'starting_case_number': i + 1 })
+        else:
+            form = InventoryForm(initial = {'starting_case_number': 1 })
 
     return render(request, 'create.html', {'form': form})
+
+
+@login_required
+def inventory_delete_view(request):
+    if request.method == "POST":
+        print(request.GET.getlist('to_delete'))
+        case_delete(request)
+        return HttpResponseRedirect(reverse_lazy('inventory_list_view'))
+
+    else:
+        pass
+    return render(request, 'inventory_item_confirm_delete.html')
 
 
 @login_required
@@ -79,6 +93,30 @@ def inventory_removal_view(request):
         form = RemovalForm()
 
     return render(request, 'remove.html', {'form': form})
+
+@login_required
+def stray_create_view(request):
+    if request.method == "POST":
+        r = request.POST
+        form = StrayForm(request.POST)
+        if form.is_valid():
+            messages.success(request, 'Successfully Added Stray.')
+            stray_entry(r)
+            return HttpResponseRedirect(reverse_lazy('inventory_summary_view'))
+    else:
+        form = StrayForm()
+    return render(request, 'create_stray.html', {'form': form})
+
+
+@login_required
+def stray_delete_view(request):
+    if request.method == "POST":
+        print(request.GET.getlist('to_delete'))
+        stray_delete(request)
+        return HttpResponseRedirect(reverse_lazy('inventory_list_view'))
+    else:
+        pass
+    return render(request, 'stray_confirm_delete.html')
 
 
 class ProductListView(LoginRequiredMixin, ListView):

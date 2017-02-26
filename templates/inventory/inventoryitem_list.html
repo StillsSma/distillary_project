@@ -10,11 +10,15 @@
 <table  class="table table-bordered" >
     <caption>Cases</caption>
   <tr>
+    <th><form class="" action="delete/" method="get">
+      {% csrf_token %}
+      <input class="btn btn-default btn-md"type="submit" name="" value="delete">
+  </th>
     <th>Case No. </th>
     <th>Date Entered</th>
     <th>Name</th>
     <th>Product</th>
-    <th>Bottle Size</th>
+    <th>Bottle Size (mL)</th>
     <th>Bottles per Case</th>
     <th>Proof</th>
     <th>Liters</th>
@@ -25,7 +29,11 @@
   </tr>
 
   {% for item in object_list %}
+
+
   <tr>
+
+    <td><input type="checkbox" name="to_delete" value="{{ item.id }}"/></td>
     <td>{{item.case_number}}</td>
     <td>{{item.date_assigned}}</td>
     <td>{{item.name}}</td>
@@ -47,10 +55,15 @@
 
 
   {% endfor %}
-
+</form>
   <table  class="table table-bordered" >
       <caption>Strays</caption>
     <tr>
+      <tr>
+        <th><form class="" action="stray/delete/" method="get">
+          {% csrf_token %}
+          <input type="submit" name="" value="delete">
+      </th>
       <th>Product</th>
       <th>Proof</th>
         <th>Date Entered</th>
@@ -58,6 +71,7 @@
 
     {% for stray in strays %}
     <tr>
+        <td><input type="checkbox" name="to_delete" value="{{ stray.id }}"/></td>
       <td>{{stray.name}}</td>
         <td>{{stray.proof}}</td>
         <td>{{stray.date_assigned}}</td>

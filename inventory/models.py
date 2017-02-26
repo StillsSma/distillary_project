@@ -77,6 +77,9 @@ class Stray(models.Model):
     name = models.ForeignKey(Product, on_delete=models.PROTECT)
     proof = models.DecimalField(max_digits=5,decimal_places=2)
 
+    def __str__(self):
+        return str(self.name)
+
     @property
     def product(self):
         return self.name.product_type
