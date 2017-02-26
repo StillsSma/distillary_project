@@ -24,18 +24,22 @@
        <li role="presentation"><a href="{% url 'login' %}">Login</a></li>
        <li role="presentation"><a href="{% url 'user_create_view' %}">Create User Account</a></li>
         {% else %}
-           <li role="presentation"><a href="{% url 'logout' %}?next={% url 'inventory_summary_view' %}">Logout</a></li>
-         {% endif %}
+  <li role="presentation"><a href="{% url 'logout' %}?next={% url 'inventory_summary_view' %}">Logout</a></li>
+  <li role="presentation" class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+      Inventory <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      <li role="presentation" ><a href="{% url 'inventory_summary_view' %}">Inventory Summary</a></li>
+        <li role="presentation"><a href="{% url 'inventory_form_view' %}">Add Case</a></li>
+        <li role="presentation"><a href="{% url 'stray_create_view' %}">Add Stray</a></li>
+          <li role="presentation"><a href="{% url 'inventory_removal_view' %}">Remove from Inventory</a></li>
+    </ul>
+  </li>
 
-    <li role="presentation" ><a href="{% url 'inventory_summary_view' %}">Inventory</a></li>
-  <li role="presentation"><a href="{% url 'inventory_form_view' %}">Add to Inventory</a></li>
-  {% if object_list|length == 0 %}
-  {% else %}
-  <li role="presentation"><a href="{% url 'inventory_removal_view' %}">Remove from Inventory</a></li>
-  {% endif %}
 
   <li role="presentation"><a href="{% url 'product_list_view' %}">View Products </a></li>
-  
+     {% endif %}
   </ul>
 
 

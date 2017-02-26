@@ -4,7 +4,7 @@
 
 
 <h1>Add Cases to Inventory</h1>
-
+<h5><a href="{% url 'inventory_summary_view' %}">Back</a></h5>
 <form action="" method="post">
     {% csrf_token %}
     {{ form.as_p }}

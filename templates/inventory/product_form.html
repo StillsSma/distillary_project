@@ -5,6 +5,7 @@
 
 
 <h1>Product Creation Form </h1>
+<h5><a href="{% url 'product_list_view' %}">Back</a></h5>
 <form action="" method="post">
     {% csrf_token %}
     {{ form.as_p }}
