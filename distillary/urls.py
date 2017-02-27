@@ -17,6 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from inventory.views import InventoryListView, ProductListView, ProductCreateView, \
                             ProductDeleteView, ProductUpdateView, inventory_form_view, \
+                            LocationListView, LocationCreateView, LocationDeleteView, LocationUpdateView, \
                             inventory_removal_view, UserCreateView, InventorySummaryView, \
                             inventory_delete_view, stray_create_view, stray_delete_view, \
                             stray_removal_view
@@ -37,4 +38,8 @@ urlpatterns = [
     url(r'^product/create/$', ProductCreateView.as_view(), name="product_create_view"),
     url(r'^product/update/(?P<pk>\d+)$', ProductUpdateView.as_view(), name="product_update_view"),
     url(r'^product/delete/(?P<pk>\d+)$', ProductDeleteView.as_view(), name="product_delete_view"),
+    url(r'^location/$', LocationListView.as_view(), name="location_list_view"),
+    url(r'^location/create/$', LocationCreateView.as_view(), name="location_create_view"),
+    url(r'^location/update/(?P<pk>\d+)$', LocationUpdateView.as_view(), name="location_update_view"),
+    url(r'^location/delete/(?P<pk>\d+)$', LocationDeleteView.as_view(), name="location_delete_view")
 ]

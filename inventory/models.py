@@ -1,6 +1,14 @@
 from django.db import models
 from django.db.models import Sum
-# Create your models here.
+
+
+class Location(models.Model):
+    name = models.CharField(max_length=100)
+    address = models.CharField(null=True, max_length=100)
+
+    def __str__(self):
+        return str(self.name)
+
 class Product(models.Model):
     product_name = models.CharField(max_length=50)
     product_type = models.CharField(max_length=50)
@@ -45,6 +53,7 @@ class InventoryItem(models.Model):
     name = models.ForeignKey(Product, on_delete=models.PROTECT)
     proof = models.DecimalField(max_digits=5,decimal_places=2)
     date_removed = models.DateTimeField(null=True,blank=True)
+    location = models.CharField(null=True,max_length=100)
 
     def __str__(self):
         return str(self.name)

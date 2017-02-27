@@ -1,4 +1,4 @@
-from inventory.models import InventoryItem, Product, Stray
+from inventory.models import InventoryItem, Product, Stray, Location
 from datetime import datetime
 from django.contrib import messages
 
@@ -17,10 +17,17 @@ def case_entry(request):
 
 
 def case_remove(request):
+    # You can't filter single objects, so the single case is represented by as a queryset with one object
         case = InventoryItem.objects.filter(case_number=int(request.POST['case_id']))
+        for item in case:
+            print(item.location)
         if len(case) != 0:
-            InventoryItem.objects.filter(case_number=int(request.POST['case_id'])).update(date_removed=datetime.now())
-            messages.success(request, 'Case Removed.')
+            for item in case:
+                if item.location == None:
+                    case.update(date_removed=datetime.now(),location=Location.objects.get(pk=request.POST['location']).name)
+                    messages.success(request, 'Case Removed.')
+                else:
+                    messages.info(request, 'Case Already Removed')
         else:
             messages.info(request, 'Case Does Not Exist.')
 

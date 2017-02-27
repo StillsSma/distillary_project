@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse, reverse_lazy
-from inventory.models import InventoryItem, Product, Stray
+from inventory.models import InventoryItem, Product, Stray, Location
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from inventory.forms import InventoryForm, CaseRemovalForm, StrayForm, StrayRemovalForm
@@ -144,3 +144,21 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     success_url = reverse_lazy("product_list_view")
+
+
+class LocationListView(LoginRequiredMixin, ListView):
+    model = Location
+
+class LocationCreateView(LoginRequiredMixin, CreateView):
+    model = Location
+    fields = ['name', 'address']
+    success_url = reverse_lazy("location_list_view")
+
+class LocationUpdateView(LoginRequiredMixin, UpdateView):
+    model = Location
+    fields = ['name', 'address']
+    success_url = reverse_lazy("location_list_view")
+
+class LocationDeleteView(LoginRequiredMixin, DeleteView):
+    model = Location
+    success_url = reverse_lazy("location_list_view")
