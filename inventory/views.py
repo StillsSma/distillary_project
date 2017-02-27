@@ -149,6 +149,10 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
 class LocationListView(LoginRequiredMixin, ListView):
     model = Location
 
+    def get_queryset(self):
+        return Location.objects.all().order_by('name')
+
+
 class LocationCreateView(LoginRequiredMixin, CreateView):
     model = Location
     fields = ['name', 'address']
