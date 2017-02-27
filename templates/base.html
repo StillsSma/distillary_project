@@ -28,10 +28,10 @@
 <body>
 
   <ul class="nav nav-tabs">
-    {% if not request.user.is_authenticated %}
+{% if not request.user.is_authenticated %}
        <li role="presentation"><a href="{% url 'login' %}">Login</a></li>
        <li role="presentation"><a href="{% url 'user_create_view' %}">Create User Account</a></li>
-        {% else %}
+{% else %}
   <li role="presentation"><a href="{% url 'logout' %}?next={% url 'inventory_summary_view' %}">Logout</a></li>
   <li role="presentation" class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -49,7 +49,9 @@
 
 
   <li role="presentation"><a href="{% url 'product_list_view' %}">View Products </a></li>
-     {% endif %}
+  <li role="presentation"><a href="{% url 'location_list_view' %}">View Locations </a></li>
+
+{% endif %}
   </ul>
 
 
