@@ -12,9 +12,8 @@ from django.urls import reverse, reverse_lazy
 from inventory.models import InventoryItem, Product, Stray
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from inventory.forms import InventoryForm, RemovalForm, StrayForm
-from inventory.data_entry import case_entry, case_remove, case_delete, stray_entry, stray_delete
-from django.contrib import messages
+from inventory.forms import InventoryForm, CaseRemovalForm, StrayForm, StrayRemovalForm
+from inventory.data_entry import case_entry, case_remove, case_delete, stray_entry, stray_remove, stray_delete
 
 
 class UserCreateView(CreateView):
@@ -82,17 +81,15 @@ def inventory_delete_view(request):
 @login_required
 def inventory_removal_view(request):
     if request.method == "POST":
-        r = request.POST
-        print(r)
-        form = RemovalForm(request.POST)
+        r = request
+        form = CaseRemovalForm(request.POST)
         if form.is_valid():
-            messages.success(request, 'Case Removed.')
             case_remove(r)
             return HttpResponseRedirect(reverse_lazy('inventory_removal_view'))
     else:
-        form = RemovalForm()
+        form = CaseRemovalForm()
 
-    return render(request, 'remove.html', {'form': form})
+    return render(request, 'removal.html', {'form': form})
 
 @login_required
 def stray_create_view(request):
@@ -107,6 +104,18 @@ def stray_create_view(request):
         form = StrayForm()
     return render(request, 'create_stray.html', {'form': form})
 
+@login_required
+def stray_removal_view(request):
+    if request.method == "POST":
+        r = request
+        form = StrayRemovalForm(r.POST)
+        if form.is_valid():
+            stray_remove(r)
+            return HttpResponseRedirect(reverse_lazy('stray_removal_view'))
+    else:
+        form = StrayRemovalForm()
+
+    return render(request, 'stray_removal.html', {'form': form})
 
 @login_required
 def stray_delete_view(request):

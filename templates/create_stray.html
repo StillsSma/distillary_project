@@ -4,10 +4,29 @@
 
 
 <h1>Add Strays to Inventory</h1>
-<h5><a href="{% url 'inventory_summary_view' %}">Back</a></h5>
+<h5><a href="{% url 'inventory_list_view' %}">Back</a></h5>
 <form action="" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    <p><label for="id_date_assigned">Date assigned:</label>
+      <input id="datepicker" type="text" name="date_assigned" required /></p>
+      <div class="fieldWrapper">
+      {{ form.name.errors }}
+      {{ form.name.label_tag }}
+      {{ form.name }}
+      </div>
+
+      <div class="fieldWrapper">
+      {{ form.proof.errors }}
+      {{ form.proof.label_tag }}
+      {{ form.proof }}
+      </div>
+
+      <div class="fieldWrapper">
+      {{ form.number_of_bottles.errors }}
+      {{ form.number_of_bottles.label_tag }}
+      {{ form.number_of_bottles }}
+      </div>
+
     <input type="submit" value="Submit" />
 </form>
 </div>

@@ -8,7 +8,15 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" media="screen" title="no title">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+  </script>
+</head>
    <style media="screen">
      body {
        background-color: white;
@@ -33,7 +41,9 @@
       <li role="presentation" ><a href="{% url 'inventory_summary_view' %}">Inventory Summary</a></li>
         <li role="presentation"><a href="{% url 'inventory_form_view' %}">Add Case</a></li>
         <li role="presentation"><a href="{% url 'stray_create_view' %}">Add Stray</a></li>
-          <li role="presentation"><a href="{% url 'inventory_removal_view' %}">Remove from Inventory</a></li>
+          <li role="presentation"><a href="{% url 'inventory_removal_view' %}">Remove Case</a></li>
+          <li role="presentation"><a href="{% url 'stray_removal_view' %}">Remove Stray</a></li>
+
     </ul>
   </li>
 
