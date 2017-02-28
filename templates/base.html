@@ -39,8 +39,8 @@
     </a>
     <ul class="dropdown-menu">
       <li role="presentation" ><a href="{% url 'inventory_summary_view' %}">Inventory Summary</a></li>
-        <li role="presentation"><a href="{% url 'inventory_form_view' %}">Add Case</a></li>
-        <li role="presentation"><a href="{% url 'stray_create_view' %}">Add Stray</a></li>
+        <li role="presentation"><a href="{% url 'inventory_form_view' %}">Add Cases</a></li>
+        <li role="presentation"><a href="{% url 'stray_create_view' %}">Add Strays</a></li>
           <li role="presentation"><a href="{% url 'inventory_removal_view' %}">Remove Case</a></li>
           <li role="presentation"><a href="{% url 'stray_removal_view' %}">Remove Stray</a></li>
 
@@ -49,7 +49,7 @@
 
 
   <li role="presentation"><a href="{% url 'product_list_view' %}">View Products </a></li>
-  <li role="presentation"><a href="{% url 'location_list_view' %}">View Locations </a></li>
+  <li role="presentation"><a href="{% url 'destination_list_view' %}">View Destinations </a></li>
 
 {% endif %}
   </ul>

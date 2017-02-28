@@ -3,17 +3,18 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 import django_excel as excel
 import requests
+from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse, reverse_lazy
-from inventory.models import InventoryItem, Product, Stray, Location
+from inventory.models import InventoryItem, Product, Stray, Destination
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from inventory.forms import InventoryForm, CaseRemovalForm, StrayForm, StrayRemovalForm
-from inventory.data_entry import case_entry, case_remove, case_delete, stray_entry, stray_remove, stray_delete
+from inventory.forms import InventoryForm, CaseRemovalForm, StrayForm, StrayRemovalForm, InventoryUpdateForm
+from inventory.data_entry import case_entry, case_remove, case_delete, stray_entry, stray_remove, stray_delete, case_update
 
 
 class UserCreateView(CreateView):
@@ -65,14 +66,39 @@ def inventory_form_view(request):
 
     return render(request, 'create.html', {'form': form})
 
+@login_required
+def inventory_update_view(request):
+    if request.method == "POST":
+        case_update(request)
+        return HttpResponseRedirect(reverse_lazy('inventory_list_view'))
+    else:
+        cases = request.GET.getlist('checks')
+        if len(cases) > 0:
+            case = InventoryItem.objects.get(id=cases[0])
+            if case.destination != None:
+                destination = Destination.objects.get(name=case.destination).id
+            else:
+                destination = ''
+            form = InventoryUpdateForm(initial = {
+            'date_assigned':case.date_assigned ,
+            'name':case.name ,
+            'proof':case.proof ,
+            'date_removed': case.date_removed,
+            'destination': destination,
+            })
+
+
+        else:
+            return HttpResponseRedirect(reverse_lazy('inventory_list_view'))
+    return render(request, 'inventory_item_update.html', {'form': form})
 
 @login_required
 def inventory_delete_view(request):
+    print(request)
     if request.method == "POST":
-        print(request.GET.getlist('to_delete'))
+        print(request.GET.getlist('checks'))
         case_delete(request)
         return HttpResponseRedirect(reverse_lazy('inventory_list_view'))
-
     else:
         pass
     return render(request, 'inventory_item_confirm_delete.html')
@@ -120,7 +146,7 @@ def stray_removal_view(request):
 @login_required
 def stray_delete_view(request):
     if request.method == "POST":
-        print(request.GET.getlist('to_delete'))
+        print(request.GET.getlist('checks'))
         stray_delete(request)
         return HttpResponseRedirect(reverse_lazy('inventory_list_view'))
     else:
@@ -146,23 +172,23 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("product_list_view")
 
 
-class LocationListView(LoginRequiredMixin, ListView):
-    model = Location
+class DestinationListView(LoginRequiredMixin, ListView):
+    model = Destination
 
     def get_queryset(self):
-        return Location.objects.all().order_by('name')
+        return Destination.objects.all().order_by('name')
 
 
-class LocationCreateView(LoginRequiredMixin, CreateView):
-    model = Location
+class DestinationCreateView(LoginRequiredMixin, CreateView):
+    model = Destination
     fields = ['name', 'address']
-    success_url = reverse_lazy("location_list_view")
+    success_url = reverse_lazy("destination_list_view")
 
-class LocationUpdateView(LoginRequiredMixin, UpdateView):
-    model = Location
+class DestinationUpdateView(LoginRequiredMixin, UpdateView):
+    model = Destination
     fields = ['name', 'address']
-    success_url = reverse_lazy("location_list_view")
+    success_url = reverse_lazy("destination_list_view")
 
-class LocationDeleteView(LoginRequiredMixin, DeleteView):
-    model = Location
-    success_url = reverse_lazy("location_list_view")
+class DestinationDeleteView(LoginRequiredMixin, DeleteView):
+    model = Destination
+    success_url = reverse_lazy("destination_list_view")

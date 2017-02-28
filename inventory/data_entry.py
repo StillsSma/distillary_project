@@ -1,4 +1,4 @@
-from inventory.models import InventoryItem, Product, Stray, Location
+from inventory.models import InventoryItem, Product, Stray, Destination
 from datetime import datetime
 from django.contrib import messages
 
@@ -20,20 +20,29 @@ def case_remove(request):
     # You can't filter single objects, so the single case is represented by as a queryset with one object
         case = InventoryItem.objects.filter(case_number=int(request.POST['case_id']))
         for item in case:
-            print(item.location)
+            print(item.destination)
         if len(case) != 0:
             for item in case:
-                if item.location == None:
-                    case.update(date_removed=datetime.now(),location=Location.objects.get(pk=request.POST['location']).name)
+                if item.destination == None:
+                    case.update(date_removed=datetime.now(),destination=Destination.objects.get(pk=request.POST['destination']).name)
                     messages.success(request, 'Case Removed.')
                 else:
                     messages.info(request, 'Case Already Removed')
         else:
             messages.info(request, 'Case Does Not Exist.')
 
+def case_update(request):
+    g = request.GET
+    p = request.POST
+    for num in g.getlist('checks'):
+        InventoryItem.objects.filter(pk=num).update(name=p['name'],
+        date_assigned=p['date_assigned'],
+        proof=p['proof'],
+        destination=Destination.objects.get(pk=request.POST['destination']).name,
+        date_removed=p['date_removed'])
 
 def case_delete(request):
-    for num in request.GET.getlist('to_delete'):
+    for num in request.GET.getlist('checks'):
         InventoryItem.objects.get(id=num).delete()
 
 
@@ -57,5 +66,5 @@ def stray_remove(request):
 
 
 def stray_delete(request):
-    for num in request.GET.getlist('to_delete'):
+    for num in request.GET.getlist('checks'):
         Stray.objects.get(id=num).delete()

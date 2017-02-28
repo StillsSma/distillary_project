@@ -4,8 +4,8 @@
 <div class="container">
 
 
-<h1>Product Creation Form </h1>
-<h5><a href="{% url 'location_list_view' %}">Back</a></h5>
+<h1>Destination Creation Form </h1>
+<h5><a href="{% url 'destination_list_view' %}">Back</a></h5>
 <form action="" method="post">
     {% csrf_token %}
     {{ form.as_p }}

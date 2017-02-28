@@ -10,10 +10,10 @@
 <table  class="table table-bordered" >
     <caption>Cases</caption>
   <tr>
-    <th><form class="" action="delete/" method="get">
-      {% csrf_token %}
-      <input class="btn btn-default btn-md"type="submit" name="" value="delete">
+    <th><form class="" action="update/" method="get">
+      <input class="btn btn-default btn-md"type="submit" name="" value="update">
   </th>
+
     <th>Case No. </th>
     <th>Date Entered</th>
     <th>Name</th>
@@ -25,7 +25,7 @@
     <th>Wine Gallons</th>
     <th>Proof Gallons</th>
     <th>Date Removed</th>
-    <th>Location</th>
+    <th>Destination</th>
 
   </tr>
 
@@ -34,7 +34,7 @@
 
   <tr>
 
-    <td><input type="checkbox" name="to_delete" value="{{ item.id }}"/></td>
+    <td><input type="checkbox" name="checks" value="{{ item.id }}"/></td>
     <td>{{item.case_number}}</td>
     <td>{{item.date_assigned}}</td>
     <td>{{item.name}}</td>
@@ -46,18 +46,16 @@
     <td>{{item.wine_gallons}}</td>
     <td>{{item.proof_gallons}}</td>
     <td>{{item.date_removed}}</td>
-    <td>{{item.location}}</td>
+    <td>{{item.destination}}</td>
 
 
   </tr>
-
-
-
-
-
-
-  {% endfor %}
+{% endfor %}
 </form>
+
+
+
+
   <table  class="table table-bordered" >
       <caption>Strays</caption>
     <tr>

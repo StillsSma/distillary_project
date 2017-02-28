@@ -17,9 +17,9 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from inventory.views import InventoryListView, ProductListView, ProductCreateView, \
                             ProductDeleteView, ProductUpdateView, inventory_form_view, \
-                            LocationListView, LocationCreateView, LocationDeleteView, LocationUpdateView, \
+                            DestinationListView, DestinationCreateView, DestinationDeleteView, DestinationUpdateView, \
                             inventory_removal_view, UserCreateView, InventorySummaryView, \
-                            inventory_delete_view, stray_create_view, stray_delete_view, \
+                            inventory_update_view, inventory_delete_view, stray_create_view, stray_delete_view, \
                             stray_removal_view
 
 urlpatterns = [
@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^$', InventorySummaryView.as_view(), name='inventory_summary_view'),
     url(r'^inventory/$', InventoryListView.as_view(), name='inventory_list_view'),
     url(r'^inventory/create/$', inventory_form_view, name="inventory_form_view"),
+    url(r'^inventory/update/$', inventory_update_view, name="inventory_update_view"),
     url(r'^inventory/removal/$', inventory_removal_view, name="inventory_removal_view"),
     url(r'^inventory/delete/$', inventory_delete_view, name="inventory_delete_view"),
     url(r'^inventory/stray/create/$', stray_create_view, name="stray_create_view"),
@@ -38,8 +39,8 @@ urlpatterns = [
     url(r'^product/create/$', ProductCreateView.as_view(), name="product_create_view"),
     url(r'^product/update/(?P<pk>\d+)$', ProductUpdateView.as_view(), name="product_update_view"),
     url(r'^product/delete/(?P<pk>\d+)$', ProductDeleteView.as_view(), name="product_delete_view"),
-    url(r'^location/$', LocationListView.as_view(), name="location_list_view"),
-    url(r'^location/create/$', LocationCreateView.as_view(), name="location_create_view"),
-    url(r'^location/update/(?P<pk>\d+)$', LocationUpdateView.as_view(), name="location_update_view"),
-    url(r'^location/delete/(?P<pk>\d+)$', LocationDeleteView.as_view(), name="location_delete_view")
+    url(r'^destination/$', DestinationListView.as_view(), name="destination_list_view"),
+    url(r'^destination/create/$', DestinationCreateView.as_view(), name="destination_create_view"),
+    url(r'^destination/update/(?P<pk>\d+)$', DestinationUpdateView.as_view(), name="destination_update_view"),
+    url(r'^destination/delete/(?P<pk>\d+)$', DestinationDeleteView.as_view(), name="destination_delete_view")
 ]

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <h1>Sales Destinations</h1>
+  <h4><a href="{% url 'destination_create_view' %}">Add Destination</a></h4>
+
+<table  class="table table-bordered" >
+    <caption>Entered Destinations</caption>
+  <tr>
+    <th>Destination Name</th>
+    <th>Address</th>
+  </tr>
+
+  {% for item in object_list %}
+  <tr>
+    <td>{{item.name}}</td>
+    <td>{{item.address}}</td>
+    <td><a href="{% url 'destination_update_view' item.id %}">Update</a></td>
+    <td><a href="{% url 'destination_delete_view' item.id %}">Delete</a></td>
+  </tr>
+{% endfor %}
+
+{% endblock %}

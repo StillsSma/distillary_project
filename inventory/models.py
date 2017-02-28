@@ -2,7 +2,7 @@ from django.db import models
 from django.db.models import Sum
 
 
-class Location(models.Model):
+class Destination(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(null=True, max_length=100)
 
@@ -53,7 +53,7 @@ class InventoryItem(models.Model):
     name = models.ForeignKey(Product, on_delete=models.PROTECT)
     proof = models.DecimalField(max_digits=5,decimal_places=2)
     date_removed = models.DateTimeField(null=True,blank=True)
-    location = models.CharField(null=True,max_length=100)
+    destination = models.CharField(null=True,max_length=100)
 
     def __str__(self):
         return str(self.name)
@@ -75,7 +75,7 @@ class InventoryItem(models.Model):
 
     @property
     def wine_gallons(self):
-        return round((int(self.liters) * .264172),2)
+        return round((float(self.liters) * .264172),2)
 
     @property
     def proof_gallons(self):

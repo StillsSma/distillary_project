@@ -3,22 +3,27 @@
 <div class="container">
 
 
-<h1>Add Cases to Inventory</h1>
+<h1>Update Inventory Items</h1>
+
+
+
 <h5><a href="{% url 'inventory_list_view' %}">Back</a></h5>
 <form action="" method="post">
     {% csrf_token %}
-    <div class="fieldWrapper">
-    {{ form.starting_case_number.errors }}
-    {{ form.starting_case_number.label_tag }}
-    {{ form.starting_case_number }}
-    </div>
 
-    <p><label for="id_date_assigned">Date assigned:</label>
-      <input id="datepicker" type="text" name="date_assigned" required /></p>
+
+
       <div class="fieldWrapper">
       {{ form.name.errors }}
       {{ form.name.label_tag }}
       {{ form.name }}
+      </div>
+
+
+      <div class="fieldWrapper">
+      {{ form.date_assigned.errors }}
+      {{ form.date_assigned.label_tag }}
+      {{ form.date_assigned }}
       </div>
 
       <div class="fieldWrapper">
@@ -28,12 +33,16 @@
       </div>
 
       <div class="fieldWrapper">
-      {{ form.number_of_cases.errors }}
-      {{ form.number_of_cases.label_tag }}
-      {{ form.number_of_cases }}
+      {{ form.destination.errors }}
+      {{ form.destination.label_tag }}
+      {{ form.destination }}
       </div>
 
-
+      <div class="fieldWrapper">
+      {{ form.date_removed.errors }}
+      {{ form.date_removed.label_tag }}
+      {{ form.date_removed }}
+      </div>
 
 
     <input type="submit" value="Submit" />
