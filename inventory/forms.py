@@ -23,6 +23,10 @@ class InventoryUpdateForm(forms.Form):
     date_removed = forms.DateTimeField(required=False)
     destination = ModelChoiceField(queryset=Destination.objects.all())
 
+class InventoryReportForm(forms.Form):
+    destination = ModelChoiceField(queryset=Destination.objects.all(), empty_label='all', required=False)
+
+
 class StrayForm(forms.Form):
     date_assigned = forms.DateField()
     name = ModelChoiceField(queryset=Product.objects.all())

@@ -13,7 +13,7 @@ from django.urls import reverse, reverse_lazy
 from inventory.models import InventoryItem, Product, Stray, Destination
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from inventory.forms import InventoryForm, CaseRemovalForm, StrayForm, StrayRemovalForm, InventoryUpdateForm
+from inventory.forms import InventoryForm, CaseRemovalForm, StrayForm, StrayRemovalForm, InventoryUpdateForm, InventoryReportForm
 from inventory.data_entry import case_entry, case_remove, case_delete, stray_entry, stray_remove, stray_delete, case_update
 
 
@@ -47,6 +47,30 @@ class InventorySummaryView(LoginRequiredMixin, ListView):
     def get_template_names(self):
         return('inventory/inventory_summary.html')
 
+
+
+@login_required
+def inventory_report_view(request):
+    if request.method == "POST":
+        r = request.POST
+        form = InventoryUpdateForm()
+        start = datetime.strptime(r['from'], "%m/%d/%Y")
+        end = datetime.strptime(r['to'], "%m/%d/%Y")
+        if r['destination'] == '':
+            cases = InventoryItem.objects.filter(date_removed__range=[start, end])
+        else:
+            dest = Destination.objects.get(pk=int(r['destination']))
+            cases = InventoryItem.objects.filter(date_removed__range=[start, end]).filter(destination=dest)
+        context = {
+        "object_list" : cases,
+        "form" : InventoryReportForm()
+        }
+    else:
+        context = {
+        "form" : InventoryReportForm()
+
+        }
+    return render(request, 'inventory_item_report.html', context)
 
 @login_required
 def inventory_form_view(request):
@@ -93,18 +117,6 @@ def inventory_update_view(request):
     return render(request, 'inventory_item_update.html', {'form': form})
 
 @login_required
-def inventory_delete_view(request):
-    print(request)
-    if request.method == "POST":
-        print(request.GET.getlist('checks'))
-        case_delete(request)
-        return HttpResponseRedirect(reverse_lazy('inventory_list_view'))
-    else:
-        pass
-    return render(request, 'inventory_item_confirm_delete.html')
-
-
-@login_required
 def inventory_removal_view(request):
     if request.method == "POST":
         r = request
@@ -116,6 +128,20 @@ def inventory_removal_view(request):
         form = CaseRemovalForm()
 
     return render(request, 'removal.html', {'form': form})
+
+@login_required
+def inventory_delete_view(request):
+    print(request)
+    if request.method == "POST":
+        print(request.GET.getlist('checks'))
+        case_delete(request)
+        return HttpResponseRedirect(reverse_lazy('inventory_list_view'))
+    else:
+        pass
+    return render(request, 'inventory_item_confirm_delete.html')
+
+
+
 
 @login_required
 def stray_create_view(request):

@@ -19,8 +19,8 @@ from inventory.views import InventoryListView, ProductListView, ProductCreateVie
                             ProductDeleteView, ProductUpdateView, inventory_form_view, \
                             DestinationListView, DestinationCreateView, DestinationDeleteView, DestinationUpdateView, \
                             inventory_removal_view, UserCreateView, InventorySummaryView, \
-                            inventory_update_view, inventory_delete_view, stray_create_view, stray_delete_view, \
-                            stray_removal_view
+                            inventory_report_view, inventory_update_view, inventory_delete_view, \
+                            stray_create_view, stray_delete_view, stray_removal_view
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^$', InventorySummaryView.as_view(), name='inventory_summary_view'),
     url(r'^inventory/$', InventoryListView.as_view(), name='inventory_list_view'),
     url(r'^inventory/create/$', inventory_form_view, name="inventory_form_view"),
+    url(r'^inventory/report/$', inventory_report_view, name="inventory_report_view"),
     url(r'^inventory/update/$', inventory_update_view, name="inventory_update_view"),
     url(r'^inventory/removal/$', inventory_removal_view, name="inventory_removal_view"),
     url(r'^inventory/delete/$', inventory_delete_view, name="inventory_delete_view"),

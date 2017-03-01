@@ -15,6 +15,9 @@
   $( function() {
     $( "#datepicker" ).datepicker();
   } );
+  $( function() {
+    $( "#datepicker2" ).datepicker();
+  } );
   </script>
 </head>
    <style media="screen">
@@ -43,6 +46,8 @@
         <li role="presentation"><a href="{% url 'stray_create_view' %}">Add Strays</a></li>
           <li role="presentation"><a href="{% url 'inventory_removal_view' %}">Remove Case</a></li>
           <li role="presentation"><a href="{% url 'stray_removal_view' %}">Remove Stray</a></li>
+          <li role="presentation" ><a href="{% url 'inventory_report_view' %}">Reports</a></li>
+
 
     </ul>
   </li>

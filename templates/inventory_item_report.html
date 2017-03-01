@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+<div class="container">
+  <h1>Generate Report</h1>
+  <h5><a href="{% url 'inventory_list_view' %}">Back</a></h5>
+
+<h3>Date Range: </h3>
+  <form action="" method="post">
+      {% csrf_token %}
+
+      <p><label for="id_from">From:</label>
+        <input id="datepicker" type="text" name="from" required /></p>
+
+        <p><label for="id_to">To:</label>
+          <input id="datepicker2" type="text" name="to" required /></p>
+
+          {{ form }}
+
+
+      <input type="submit" value="Submit" />
+  </form>
+<table  class="table table-bordered" >
+    <caption>Cases</caption>
+
+    <th>Case No. </th>
+    <th>Date Entered</th>
+    <th>Name</th>
+    <th>Product</th>
+    <th>Bottle Size (mL)</th>
+    <th>Bottles per Case</th>
+    <th>Proof</th>
+    <th>Liters</th>
+    <th>Wine Gallons</th>
+    <th>Proof Gallons</th>
+    <th>Date Removed</th>
+    <th>Destination</th>
+
+  </tr>
+
+  {% for item in object_list %}
+
+
+  <tr>
+
+    <td>{{item.case_number}}</td>
+    <td>{{item.date_assigned}}</td>
+    <td>{{item.name}}</td>
+    <td>{{item.product}}</td>
+    <td>{{item.name.bottle_size}}</td>
+    <td>{{item.bottles_per_case}}</td>
+    <td>{{item.proof}}</td>
+    <td>{{item.liters}}</td>
+    <td>{{item.wine_gallons}}</td>
+    <td>{{item.proof_gallons}}</td>
+    <td>{{item.date_removed}}</td>
+    <td>{{item.destination}}</td>
+
+
+  </tr>
+{% endfor %}
+
+
+
+
+
+
+</div>
+
+
+{% endblock %}

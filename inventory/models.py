@@ -36,7 +36,7 @@ class Product(models.Model):
 
     @property
     def total_wine_gallons(self):
-        return round((int(self.total_liters) * .264172),2)
+        return round((float(self.total_liters) * .264172),2)
 
     @property
     def total_proof_gallons(self):
