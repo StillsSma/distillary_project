@@ -3,8 +3,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 import django_excel as excel
 import requests
+
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
@@ -17,7 +19,7 @@ from inventory.forms import InventoryForm, CaseRemovalForm, StrayForm, StrayRemo
 from inventory.data_entry import case_entry, case_remove, case_delete, stray_entry, stray_remove, stray_delete, case_update
 
 
-class UserCreateView(CreateView):
+class UserCreateView(UserPassesTestMixin, CreateView):
     model = User
     success_url = reverse_lazy("inventory_summary_view")
     form_class = UserCreationForm
@@ -27,7 +29,8 @@ class UserCreateView(CreateView):
         new_user = authenticate(username=username, password=password)
         login(self.request, new_user)
         return valid
-
+    def test_func(self):
+        return self.request.user.is_superuser
 
 class InventoryListView(LoginRequiredMixin, ListView):
     # Lists the items currently in inventory

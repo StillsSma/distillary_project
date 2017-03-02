@@ -33,9 +33,11 @@
   <ul class="nav nav-tabs">
 {% if not request.user.is_authenticated %}
        <li role="presentation"><a href="{% url 'login' %}">Login</a></li>
-       <li role="presentation"><a href="{% url 'user_create_view' %}">Create User Account</a></li>
 {% else %}
   <li role="presentation"><a href="{% url 'logout' %}?next={% url 'inventory_summary_view' %}">Logout</a></li>
+  {% if request.user.is_superuser %}
+  <li role="presentation"><a href="{% url 'user_create_view' %}">Create User Account</a></li>
+{% endif %}
   <li role="presentation" class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
       Inventory <span class="caret"></span>

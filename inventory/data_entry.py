@@ -9,7 +9,7 @@ def case_entry(request):
         inventory_item = InventoryItem.objects.create(case_number=(int(request['starting_case_number']) + count),
         date_assigned=datetime.strptime(request['date_assigned'], "%m/%d/%Y"),
         name=Product.objects.get(pk=request['name']),
-        proof=float(request['proof']))
+        proof=float(request['proof']), case_fraction=float(request['case_fraction']))
 
         inventory_item.save()
         count += 1

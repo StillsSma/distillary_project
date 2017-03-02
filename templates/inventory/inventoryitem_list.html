@@ -10,12 +10,9 @@
 
 <table  class="table table-bordered" >
     <caption>Cases</caption>
-    {% if request.user.is_superuser %}
+
   <tr>
-    <th><form class="" action="update/" method="get">
-      <input class="btn btn-default btn-md"type="submit" name="" value="update">
-  </th>
-    {% endif %}
+    <th></th>
     <th>Case No. </th>
     <th>Date Entered</th>
     <th>Name</th>
@@ -28,6 +25,11 @@
     <th>Proof Gallons</th>
     <th>Date Removed</th>
     <th>Destination</th>
+    {% if request.user.is_superuser %}
+      <th><form class="" action="update/" method="get">
+        <input class="btn btn-default btn-md"type="submit" name="" value="update">
+    </th>
+      {% endif %}
 
   </tr>
 
