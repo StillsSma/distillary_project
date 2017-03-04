@@ -24,7 +24,7 @@ class Product(models.Model):
 
     @property
     def number_of_cases(self):
-        return InventoryItem.objects.filter(name=self).count()
+        return InventoryItem.objects.filter(name=self).filter(date_removed=None).count()
 
     @property
     def total_liters(self):
