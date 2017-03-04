@@ -53,7 +53,7 @@ class InventoryItem(models.Model):
     name = models.ForeignKey(Product, on_delete=models.PROTECT)
     proof = models.DecimalField(max_digits=5,decimal_places=2)
     date_removed = models.DateTimeField(null=True,blank=True)
-    destination = models.CharField(null=True,max_length=100)
+    destination = models.CharField(null=True,max_length=100,blank=True)
     case_fraction = models.DecimalField(max_digits=5,decimal_places=4,default=1.0)
 
     def __str__(self):

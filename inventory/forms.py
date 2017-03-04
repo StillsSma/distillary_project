@@ -37,7 +37,7 @@ class InventoryUpdateForm(forms.Form):
     name = ModelChoiceField(queryset=Product.objects.all())
     proof = forms.DecimalField(min_value=0)
     date_removed = forms.DateTimeField(required=False)
-    destination = ModelChoiceField(queryset=Destination.objects.all())
+    destination = ModelChoiceField(required=False, queryset=Destination.objects.all())
 
 class InventoryReportForm(forms.Form):
     destination = ModelChoiceField(queryset=Destination.objects.all(), empty_label='all', required=False)

@@ -34,12 +34,23 @@ def case_remove(request):
 def case_update(request):
     g = request.GET
     p = request.POST
+    if p['destination'] == '':
+        dest = None
+    else:
+        dest = Destination.objects.get(pk=request.POST['destination']).name
+
+    if p['date_removed'] == '':
+        date = None
+        print(date)
+    else:
+        date = p['date_removed']
+
     for num in g.getlist('checks'):
         InventoryItem.objects.filter(pk=num).update(name=p['name'],
         date_assigned=p['date_assigned'],
         proof=p['proof'],
-        destination=Destination.objects.get(pk=request.POST['destination']).name,
-        date_removed=p['date_removed'])
+        destination=dest,
+        date_removed=date)
 
 def case_delete(request):
     for num in request.GET.getlist('checks'):
