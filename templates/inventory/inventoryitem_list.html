@@ -49,7 +49,7 @@
     <td>{{item.liters}}</td>
     <td>{{item.wine_gallons}}</td>
     <td>{{item.proof_gallons}}</td>
-    <td>{{item.date_removed}}</td>
+    <td>{{item.date_removedc}}</td>
     <td>{{item.destination}}</td>
 
 
@@ -64,9 +64,7 @@
       <caption>Strays</caption>
     <tr>
       <tr>
-        <th><form class="" action="stray/delete/" method="get">
-          {% csrf_token %}
-          <input type="submit" name="" value="delete">
+      
       </th>
       <th>Product</th>
       <th>Proof</th>
@@ -75,7 +73,6 @@
 
     {% for stray in strays %}
     <tr>
-        <td><input type="checkbox" name="to_delete" value="{{ stray.id }}"/></td>
       <td>{{stray.name}}</td>
         <td>{{stray.proof}}</td>
         <td>{{stray.date_assigned}}</td>
