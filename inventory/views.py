@@ -4,7 +4,7 @@ from django.contrib import messages
 import django_excel as excel
 import requests
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -58,7 +58,7 @@ def inventory_report_view(request):
         r = request.POST
         form = InventoryUpdateForm()
         start = datetime.strptime(r['from'], "%m/%d/%Y")
-        end = datetime.strptime(r['to'], "%m/%d/%Y")
+        end = datetime.strptime(r['to'], "%m/%d/%Y") + timedelta(hours=24)
         if r['destination'] == '':
             cases = InventoryItem.objects.filter(date_removed__range=[start, end])
         else:
